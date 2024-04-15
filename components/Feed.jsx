@@ -45,8 +45,7 @@ const Feed = () => {
         body: JSON.stringify({searchTerm}),
       });
       const data = await response.json();
-      console.log('search data', data);
-      // setPosts(data);
+      setPosts(data);
     };
     fetchfilterPosts();
   }, [searchTerm]);

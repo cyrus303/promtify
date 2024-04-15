@@ -15,7 +15,7 @@ export const POST = async (request) => {
     const userIds = userData.map((user) => user._id);
     const userPosts = await PromptModel.find({
       creator: {$in: userIds},
-    });
+    }).populate('creator');
 
     return new Response(JSON.stringify(userPosts));
   } catch (error) {
