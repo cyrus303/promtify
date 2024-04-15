@@ -21,10 +21,12 @@ const PromptCardList = ({data, handleTagClick}) => {
 
 const Feed = () => {
   const [searchText, setSearchText] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [posts, setPosts] = useState([]);
 
-  const handleSearchChange = (event) => {
-    setSearchText(event.target.value);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSearchTerm(searchText);
   };
 
   useEffect(() => {
@@ -36,17 +38,30 @@ const Feed = () => {
     fetchPosts();
   }, []);
 
+  useEffect(() => {
+    const fetchfilterPosts = async () => {
+      const response = await fetch('/api/search', {
+        method: 'POST',
+        body: JSON.stringify({searchTerm}),
+      });
+      const data = await response.json();
+      console.log('search data', data);
+      // setPosts(data);
+    };
+    fetchfilterPosts();
+  }, [searchTerm]);
+
   return (
     <section className="feed">
       <form
         className="relative w-full flex-center"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit}
       >
         <input
           type="text"
           placeholder="Search for a tag or user name"
           value={searchText}
-          onChange={(event) => handleSearchChange(event)}
+          onChange={(event) => setSearchText(event.target.value)}
           required
           className="search_input peer"
         />
