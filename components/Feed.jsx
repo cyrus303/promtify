@@ -29,6 +29,11 @@ const Feed = () => {
     setSearchTerm(searchText);
   };
 
+  const handleTagClick = (tag) => {
+    console.log(tag);
+    setSearchText(tag);
+  };
+
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch('/api/prompt');
@@ -61,15 +66,11 @@ const Feed = () => {
           placeholder="Search for a tag or user name"
           value={searchText}
           onChange={(event) => setSearchText(event.target.value)}
-          required
           className="search_input peer"
         />
       </form>
 
-      <PromptCardList
-        data={posts}
-        // handleTagClick{()=>{}}
-      />
+      <PromptCardList data={posts} handleTagClick={handleTagClick} />
     </section>
   );
 };
