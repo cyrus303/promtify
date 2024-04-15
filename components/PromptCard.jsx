@@ -4,6 +4,7 @@ import {useState} from 'react';
 import Image from 'next/image';
 import {useSession} from 'next-auth/react';
 import {usePathname, useRouter} from 'next/navigation';
+import Profile from './Profile';
 
 const PromptCard = ({
   post,
@@ -22,6 +23,10 @@ const PromptCard = ({
     setTimeout(() => setCopied(''), 3000);
   };
 
+  const handleNameClick = () => {
+    router.push(`/view-profile/${post.creator._id}`);
+  };
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
@@ -34,7 +39,10 @@ const PromptCard = ({
             className="rounded-full object-fit"
           />
           <div className="flex flex-col">
-            <h3 className="font-satoshi font-semibold text-gray-900">
+            <h3
+              className="font-satoshi font-semibold text-gray-900"
+              onClick={handleNameClick}
+            >
               {post.creator.username}
             </h3>
             <p className="font-inter text-sm text-gray-500">

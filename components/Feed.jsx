@@ -23,8 +23,8 @@ const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [posts, setPosts] = useState([]);
 
-  const handleSearchChange = (e) => {
-    e.preventDefault();
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
   };
 
   useEffect(() => {
@@ -38,12 +38,15 @@ const Feed = () => {
 
   return (
     <section className="feed">
-      <form className="relative w-full flex-center">
+      <form
+        className="relative w-full flex-center"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <input
           type="text"
           placeholder="Search for a tag or user name"
           value={searchText}
-          onChange={handleSearchChange}
+          onChange={(event) => handleSearchChange(event)}
           required
           className="search_input peer"
         />
