@@ -22,6 +22,7 @@ const PromptCardList = ({data, handleTagClick}) => {
 const Feed = () => {
   /*
     Need to implement debouncing mechanism for search
+    Need to extend search to prompt text as well
    */
 
   const [searchText, setSearchText] = useState('');
