@@ -20,6 +20,10 @@ const PromptCardList = ({data, handleTagClick}) => {
 };
 
 const Feed = () => {
+  /*
+    Need to implement debouncing mechanism for search
+   */
+
   const [searchText, setSearchText] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [posts, setPosts] = useState([]);
