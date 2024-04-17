@@ -3,13 +3,15 @@ import PromptModel from '@models/prompt';
 import UserModel from '@models/user';
 
 export const POST = async (request) => {
-  const {searchTerm} = await request.json();
+  const {searchText} = await request.json();
 
-  if (searchTerm.includes('#')) {
+  console.log(searchText);
+
+  if (searchText.includes('#')) {
     try {
       await connectToDB();
       const userPosts = await PromptModel.find({
-        tag: {$regex: searchTerm, $options: 'i'},
+        tag: {$regex: searchText, $options: 'i'},
       }).populate('creator');
       return new Response(JSON.stringify(userPosts));
     } catch (error) {
@@ -20,7 +22,7 @@ export const POST = async (request) => {
     try {
       await connectToDB();
       const userData = await UserModel.find({
-        username: {$regex: searchTerm, $options: 'i'},
+        username: {$regex: searchText, $options: 'i'},
       });
 
       const userIds = userData.map((user) => user._id);

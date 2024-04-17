@@ -21,21 +21,17 @@ const PromptCardList = ({data, handleTagClick}) => {
 
 const Feed = () => {
   /*
-    Need to implement debouncing mechanism for search
     Need to extend search to prompt text as well
    */
 
   const [searchText, setSearchText] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
   const [posts, setPosts] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSearchTerm(searchText);
   };
 
   const handleTagClick = (tag) => {
-    console.log(tag);
     setSearchText(tag);
   };
 
@@ -49,16 +45,18 @@ const Feed = () => {
   }, []);
 
   useEffect(() => {
-    const fetchfilterPosts = async () => {
+    const fetchfilterPosts = setTimeout(async () => {
       const response = await fetch('/api/search', {
         method: 'POST',
-        body: JSON.stringify({searchTerm}),
+        body: JSON.stringify({searchText}),
       });
+
       const data = await response.json();
       setPosts(data);
-    };
-    fetchfilterPosts();
-  }, [searchTerm]);
+    }, 500);
+
+    return () => clearTimeout(fetchfilterPosts);
+  }, [searchText]);
 
   return (
     <section className="feed">
