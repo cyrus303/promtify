@@ -5,12 +5,14 @@ import Image from 'next/image';
 import {useSession} from 'next-auth/react';
 import {usePathname, useRouter} from 'next/navigation';
 import Profile from './Profile';
+import Highlighter from 'react-highlight-words';
 
 const PromptCard = ({
   post,
   handleTagClick,
   handleEdit,
   handleDelete,
+  searchText,
 }) => {
   const [copied, setCopied] = useState('');
   const {data: session} = useSession();
@@ -65,7 +67,12 @@ const PromptCard = ({
         </div>
       </div>
       <p className="my-4 font-satoshi text-sm text-grey-700">
-        {post.prompt}
+        <Highlighter
+          highlightClassName="bg-orange-300 rounded-full"
+          searchWords={[searchText]}
+          autoEscape={true}
+          textToHighlight={post.prompt}
+        />
       </p>
       <p
         className="font-inter text-sm blue_gradient cursor-pointer"

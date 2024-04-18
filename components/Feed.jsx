@@ -3,7 +3,7 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import PromptCard from './PromptCard';
 
-const PromptCardList = ({data, handleTagClick}) => {
+const PromptCardList = ({data, handleTagClick, searchText}) => {
   return (
     <div className="mt-16 prompt_layout">
       {data.map((post) => {
@@ -12,6 +12,7 @@ const PromptCardList = ({data, handleTagClick}) => {
             key={post._id}
             post={post}
             handleTagClick={handleTagClick}
+            searchText={searchText}
           />
         );
       })}
@@ -20,10 +21,6 @@ const PromptCardList = ({data, handleTagClick}) => {
 };
 
 const Feed = () => {
-  /*
-    Need to extend search to prompt text as well
-   */
-
   const [searchText, setSearchText] = useState('');
   const [posts, setPosts] = useState([]);
 
@@ -73,7 +70,11 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList data={posts} handleTagClick={handleTagClick} />
+      <PromptCardList
+        data={posts}
+        handleTagClick={handleTagClick}
+        searchText={searchText}
+      />
     </section>
   );
 };
